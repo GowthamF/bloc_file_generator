@@ -9,21 +9,21 @@ namespace Flutter_Bloc_Generator
     {
         static string importEquatableString = "import 'package:equatable/equatable.dart';";
         static string importBlocString = "import 'package:bloc/bloc.dart';";
-        static string partEventFileString = "part '{bloc}_event.dart'";
-        static string partStateFileString = "part '{bloc}_state.dart'";
-        static string partBlocFileString = "part of '{bloc}_bloc.dart'";
+        static string partEventFileString = "part '{bloc}_event.dart';";
+        static string partStateFileString = "part '{bloc}_state.dart';";
+        static string partBlocFileString = "part of '{bloc}_bloc.dart';";
         static void Main(string[] args)
         {
             List<Bloc> blocClasses = new List<Bloc>() 
             { 
                 new Bloc() 
                 {
-                    BlocName ="TodoBloc",
-                    EventName="TodoEvent",
-                    StateName="TodoState",
-                    FileName="todo",
-                    EventsNames = new List<string>() { "SendMobileVerification", "MobileVerificationCodeSent" },
-                    StatesName= new List<string>() { "InitialState", "Loaded" } 
+                    BlocName ="CategoryBloc",
+                    EventName="CategoryEvent",
+                    StateName="CategoryState",
+                    FileName="category",
+                    EventsNames = new List<string>() { "GetAllCategories", "GetCategoryById" },
+                    StatesName= new List<string>() { "InitialState", "Loading","Loaded", "Error" } 
                 } 
             };
 
@@ -84,7 +84,7 @@ namespace Flutter_Bloc_Generator
             string eventMappingFunctions = String.Empty;
             foreach (var item in events)
             {
-                eventMapping += $"{Environment.NewLine}  if (event is {item})" + " {" + Environment.NewLine + $"    yield* _map{item}ToState(event);"+ Environment.NewLine+ "  }" + Environment.NewLine;
+                eventMapping += $"{Environment.NewLine}  if (event is {item})" + " {" + Environment.NewLine + $"    yield* _map{item}EventToState(event);"+ Environment.NewLine+ "  }" + Environment.NewLine;
                 eventMappingFunctions += $" Stream<{stateClassName}> _map{item}EventToState({item} event) async*"+" {}" + Environment.NewLine + Environment.NewLine;
             }
             mapEventToStateString = mapEventToStateString.Replace("eventMapping", eventMapping);
